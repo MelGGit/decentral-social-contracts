@@ -4,6 +4,7 @@
 import {
   BaseContract,
   BigNumber,
+  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -19,14 +20,23 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export interface UserStorageInterface extends utils.Interface {
   functions: {
     "createUser(bytes32)": FunctionFragment;
+    "getUserFromId(uint256)": FunctionFragment;
   };
 
   encodeFunctionData(
     functionFragment: "createUser",
     values: [BytesLike]
   ): string;
+  encodeFunctionData(
+    functionFragment: "getUserFromId",
+    values: [BigNumberish]
+  ): string;
 
   decodeFunctionResult(functionFragment: "createUser", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "getUserFromId",
+    data: BytesLike
+  ): Result;
 
   events: {};
 }
@@ -62,6 +72,11 @@ export interface UserStorage extends BaseContract {
       _username: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    getUserFromId(
+      _userId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, string]>;
   };
 
   createUser(
@@ -69,11 +84,21 @@ export interface UserStorage extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  getUserFromId(
+    _userId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<[BigNumber, string]>;
+
   callStatic: {
     createUser(
       _username: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    getUserFromId(
+      _userId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber, string]>;
   };
 
   filters: {};
@@ -83,12 +108,22 @@ export interface UserStorage extends BaseContract {
       _username: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    getUserFromId(
+      _userId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     createUser(
       _username: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    getUserFromId(
+      _userId: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }

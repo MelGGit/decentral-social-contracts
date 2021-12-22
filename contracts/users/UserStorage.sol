@@ -19,4 +19,12 @@ contract UserStorage {
 
         return latestUserId;
     }
+
+    function getUserFromId(uint256 _userId)
+        public
+        view
+        returns (uint256, bytes32)
+    {
+        return (profiles[_userId].id, profiles[_userId].username);
+    }
 }
