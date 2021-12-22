@@ -164,7 +164,7 @@ const config: HardhatUserConfig = {
     ),
   },
   solidity: {
-    version: "0.6.12",
+    version: "0.8.9",
     settings: {
       optimizer: {
         enabled: true,
@@ -172,10 +172,10 @@ const config: HardhatUserConfig = {
       },
     },
   },
-  tenderly: {
-    project: process.env.TENDERLY_PROJECT,
-    username: process.env.TENDERLY_USERNAME,
-  },
+  // tenderly: {
+  //   project: process.env.TENDERLY_PROJECT,
+  //   username: process.env.TENDERLY_USERNAME,
+  // },
   watcher: {
     compile: {
       tasks: ["compile"],
