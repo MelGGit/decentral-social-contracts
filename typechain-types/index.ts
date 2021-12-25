@@ -2,7 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { Greeter } from "./Greeter";
+export type { TweetStorage } from "./TweetStorage";
 export type { UserStorage } from "./UserStorage";
 
 export { Greeter__factory } from "./factories/Greeter__factory";
+export { TweetStorage__factory } from "./factories/TweetStorage__factory";
 export { UserStorage__factory } from "./factories/UserStorage__factory";
