@@ -20,7 +20,7 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export interface UserStorageInterface extends utils.Interface {
   functions: {
     "createUser(bytes32)": FunctionFragment;
-    "getUserFromId(uint256)": FunctionFragment;
+    "profiles(uint256)": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -28,15 +28,12 @@ export interface UserStorageInterface extends utils.Interface {
     values: [BytesLike]
   ): string;
   encodeFunctionData(
-    functionFragment: "getUserFromId",
+    functionFragment: "profiles",
     values: [BigNumberish]
   ): string;
 
   decodeFunctionResult(functionFragment: "createUser", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "getUserFromId",
-    data: BytesLike
-  ): Result;
+  decodeFunctionResult(functionFragment: "profiles", data: BytesLike): Result;
 
   events: {};
 }
@@ -73,10 +70,10 @@ export interface UserStorage extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
-    getUserFromId(
-      _userId: BigNumberish,
+    profiles(
+      arg0: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, string]>;
+    ): Promise<[BigNumber, string] & { id: BigNumber; username: string }>;
   };
 
   createUser(
@@ -84,10 +81,10 @@ export interface UserStorage extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  getUserFromId(
-    _userId: BigNumberish,
+  profiles(
+    arg0: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<[BigNumber, string]>;
+  ): Promise<[BigNumber, string] & { id: BigNumber; username: string }>;
 
   callStatic: {
     createUser(
@@ -95,10 +92,10 @@ export interface UserStorage extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    getUserFromId(
-      _userId: BigNumberish,
+    profiles(
+      arg0: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, string]>;
+    ): Promise<[BigNumber, string] & { id: BigNumber; username: string }>;
   };
 
   filters: {};
@@ -109,10 +106,7 @@ export interface UserStorage extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
-    getUserFromId(
-      _userId: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    profiles(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -121,8 +115,8 @@ export interface UserStorage extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
-    getUserFromId(
-      _userId: BigNumberish,
+    profiles(
+      arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
