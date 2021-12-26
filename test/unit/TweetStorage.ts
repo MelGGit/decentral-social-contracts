@@ -1,8 +1,8 @@
 import { ethers } from "hardhat";
 import { assert, expect } from "chai";
-import { TweetStorage__factory, TweetStorage } from '../typechain-types'
+import { TweetStorage__factory, TweetStorage } from '../../typechain-types'
 
-describe('TweetStorage', () => {
+describe('TweetStorage Unit Test', () => {
 
   let tweetstorage: TweetStorage
 

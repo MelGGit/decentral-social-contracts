@@ -2,7 +2,9 @@
 
 pragma solidity 0.8.9;
 
-contract TweetStorage {
+import "../helpers/BaseStorage.sol";
+
+contract TweetStorage is BaseStorage {
     mapping(uint256 => Tweet) public tweets;
 
     struct Tweet {
@@ -16,6 +18,7 @@ contract TweetStorage {
 
     function createTweet(uint256 _userId, string memory _text)
         public
+        onlyController
         returns (uint256)
     {
         latestTweetId++;

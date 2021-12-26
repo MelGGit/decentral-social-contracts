@@ -4,7 +4,6 @@
 import {
   BaseContract,
   BigNumber,
-  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -17,23 +16,17 @@ import { FunctionFragment, Result } from "@ethersproject/abi";
 import { Listener, Provider } from "@ethersproject/providers";
 import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
-export interface TweetStorageInterface extends utils.Interface {
+export interface BaseStorageInterface extends utils.Interface {
   functions: {
     "controllerAddr()": FunctionFragment;
-    "createTweet(uint256,string)": FunctionFragment;
     "ownerAddr()": FunctionFragment;
     "setControllerAddr(address)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
-    "tweets(uint256)": FunctionFragment;
   };
 
   encodeFunctionData(
     functionFragment: "controllerAddr",
     values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "createTweet",
-    values: [BigNumberish, string]
   ): string;
   encodeFunctionData(functionFragment: "ownerAddr", values?: undefined): string;
   encodeFunctionData(
@@ -44,17 +37,9 @@ export interface TweetStorageInterface extends utils.Interface {
     functionFragment: "transferOwnership",
     values: [string]
   ): string;
-  encodeFunctionData(
-    functionFragment: "tweets",
-    values: [BigNumberish]
-  ): string;
 
   decodeFunctionResult(
     functionFragment: "controllerAddr",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "createTweet",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "ownerAddr", data: BytesLike): Result;
@@ -66,17 +51,16 @@ export interface TweetStorageInterface extends utils.Interface {
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "tweets", data: BytesLike): Result;
 
   events: {};
 }
 
-export interface TweetStorage extends BaseContract {
+export interface BaseStorage extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: TweetStorageInterface;
+  interface: BaseStorageInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -100,12 +84,6 @@ export interface TweetStorage extends BaseContract {
   functions: {
     controllerAddr(overrides?: CallOverrides): Promise<[string]>;
 
-    createTweet(
-      _userId: BigNumberish,
-      _text: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
-
     ownerAddr(overrides?: CallOverrides): Promise<[string]>;
 
     setControllerAddr(
@@ -117,27 +95,9 @@ export interface TweetStorage extends BaseContract {
       _newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
-
-    tweets(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, string, BigNumber, BigNumber] & {
-        id: BigNumber;
-        text: string;
-        userId: BigNumber;
-        postedAt: BigNumber;
-      }
-    >;
   };
 
   controllerAddr(overrides?: CallOverrides): Promise<string>;
-
-  createTweet(
-    _userId: BigNumberish,
-    _text: string,
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   ownerAddr(overrides?: CallOverrides): Promise<string>;
 
@@ -151,26 +111,8 @@ export interface TweetStorage extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
-  tweets(
-    arg0: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<
-    [BigNumber, string, BigNumber, BigNumber] & {
-      id: BigNumber;
-      text: string;
-      userId: BigNumber;
-      postedAt: BigNumber;
-    }
-  >;
-
   callStatic: {
     controllerAddr(overrides?: CallOverrides): Promise<string>;
-
-    createTweet(
-      _userId: BigNumberish,
-      _text: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
 
     ownerAddr(overrides?: CallOverrides): Promise<string>;
 
@@ -183,30 +125,12 @@ export interface TweetStorage extends BaseContract {
       _newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
-
-    tweets(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [BigNumber, string, BigNumber, BigNumber] & {
-        id: BigNumber;
-        text: string;
-        userId: BigNumber;
-        postedAt: BigNumber;
-      }
-    >;
   };
 
   filters: {};
 
   estimateGas: {
     controllerAddr(overrides?: CallOverrides): Promise<BigNumber>;
-
-    createTweet(
-      _userId: BigNumberish,
-      _text: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
 
     ownerAddr(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -219,18 +143,10 @@ export interface TweetStorage extends BaseContract {
       _newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
-
-    tweets(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     controllerAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    createTweet(
-      _userId: BigNumberish,
-      _text: string,
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
 
     ownerAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -242,11 +158,6 @@ export interface TweetStorage extends BaseContract {
     transferOwnership(
       _newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
-
-    tweets(
-      arg0: BigNumberish,
-      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }

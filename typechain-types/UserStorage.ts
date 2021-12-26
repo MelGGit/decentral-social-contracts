@@ -19,21 +19,51 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface UserStorageInterface extends utils.Interface {
   functions: {
+    "controllerAddr()": FunctionFragment;
     "createUser(bytes32)": FunctionFragment;
+    "ownerAddr()": FunctionFragment;
     "profiles(uint256)": FunctionFragment;
+    "setControllerAddr(address)": FunctionFragment;
+    "transferOwnership(address)": FunctionFragment;
   };
 
+  encodeFunctionData(
+    functionFragment: "controllerAddr",
+    values?: undefined
+  ): string;
   encodeFunctionData(
     functionFragment: "createUser",
     values: [BytesLike]
   ): string;
+  encodeFunctionData(functionFragment: "ownerAddr", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "profiles",
     values: [BigNumberish]
   ): string;
+  encodeFunctionData(
+    functionFragment: "setControllerAddr",
+    values: [string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transferOwnership",
+    values: [string]
+  ): string;
 
+  decodeFunctionResult(
+    functionFragment: "controllerAddr",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "createUser", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "ownerAddr", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "profiles", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setControllerAddr",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transferOwnership",
+    data: BytesLike
+  ): Result;
 
   events: {};
 }
@@ -65,59 +95,129 @@ export interface UserStorage extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    controllerAddr(overrides?: CallOverrides): Promise<[string]>;
+
     createUser(
       _username: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    ownerAddr(overrides?: CallOverrides): Promise<[string]>;
+
     profiles(
       arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber, string] & { id: BigNumber; username: string }>;
+
+    setControllerAddr(
+      _controllerAdrr: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
+    transferOwnership(
+      _newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
   };
+
+  controllerAddr(overrides?: CallOverrides): Promise<string>;
 
   createUser(
     _username: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  ownerAddr(overrides?: CallOverrides): Promise<string>;
+
   profiles(
     arg0: BigNumberish,
     overrides?: CallOverrides
   ): Promise<[BigNumber, string] & { id: BigNumber; username: string }>;
 
+  setControllerAddr(
+    _controllerAdrr: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
+  transferOwnership(
+    _newOwner: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   callStatic: {
+    controllerAddr(overrides?: CallOverrides): Promise<string>;
+
     createUser(
       _username: BytesLike,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    ownerAddr(overrides?: CallOverrides): Promise<string>;
 
     profiles(
       arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[BigNumber, string] & { id: BigNumber; username: string }>;
+
+    setControllerAddr(
+      _controllerAdrr: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    transferOwnership(
+      _newOwner: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
   };
 
   filters: {};
 
   estimateGas: {
+    controllerAddr(overrides?: CallOverrides): Promise<BigNumber>;
+
     createUser(
       _username: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    ownerAddr(overrides?: CallOverrides): Promise<BigNumber>;
+
     profiles(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    setControllerAddr(
+      _controllerAdrr: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    transferOwnership(
+      _newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    controllerAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     createUser(
       _username: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
+    ownerAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     profiles(
       arg0: BigNumberish,
       overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    setControllerAddr(
+      _controllerAdrr: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    transferOwnership(
+      _newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -2,7 +2,9 @@
 
 pragma solidity 0.8.9;
 
-contract UserStorage {
+import "../helpers/BaseStorage.sol";
+
+contract UserStorage is BaseStorage {
     struct Profile {
         uint256 id;
         bytes32 username;
@@ -12,7 +14,11 @@ contract UserStorage {
 
     uint256 latestUserId;
 
-    function createUser(bytes32 _username) public returns (uint256) {
+    function createUser(bytes32 _username)
+        public
+        onlyController
+        returns (uint256)
+    {
         latestUserId++;
 
         profiles[latestUserId] = Profile(latestUserId, _username);
