@@ -2,7 +2,7 @@
 import { DeployFunction } from "hardhat-deploy/types";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 
-const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<void> => {
+const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<boolean> => {
   // @ts-ignore
   const { deployments, getNamedAccounts } = hre
   const { deploy } = deployments;
@@ -13,7 +13,10 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
   });
 
   console.log(`UserStorage deployed to ${contract.address}`);
+
+  return true
 };
 
 export default func
 func.tags = ["UserStorage"]
+func.id = 'UserStorage'

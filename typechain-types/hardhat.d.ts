@@ -13,9 +13,13 @@ import * as Contracts from ".";
 declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
-      name: "Greeter",
+      name: "ContractManager",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.Greeter__factory>;
+    ): Promise<Contracts.ContractManager__factory>;
+    getContractFactory(
+      name: "BaseController",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.BaseController__factory>;
     getContractFactory(
       name: "BaseStorage",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -25,19 +29,32 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Owned__factory>;
     getContractFactory(
+      name: "TweetController",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.TweetController__factory>;
+    getContractFactory(
       name: "TweetStorage",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.TweetStorage__factory>;
+    getContractFactory(
+      name: "UserController",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.UserController__factory>;
     getContractFactory(
       name: "UserStorage",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.UserStorage__factory>;
 
     getContractAt(
-      name: "Greeter",
+      name: "ContractManager",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.Greeter>;
+    ): Promise<Contracts.ContractManager>;
+    getContractAt(
+      name: "BaseController",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.BaseController>;
     getContractAt(
       name: "BaseStorage",
       address: string,
@@ -49,10 +66,20 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.Owned>;
     getContractAt(
+      name: "TweetController",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.TweetController>;
+    getContractAt(
       name: "TweetStorage",
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.TweetStorage>;
+    getContractAt(
+      name: "UserController",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.UserController>;
     getContractAt(
       name: "UserStorage",
       address: string,
