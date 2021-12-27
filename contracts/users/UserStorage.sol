@@ -4,6 +4,8 @@ pragma solidity 0.8.9;
 
 import "../helpers/BaseStorage.sol";
 
+// import "hardhat/console.sol";
+
 contract UserStorage is BaseStorage {
     struct Profile {
         uint256 id;

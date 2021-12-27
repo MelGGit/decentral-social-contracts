@@ -7,7 +7,7 @@ import "./Owned.sol";
 contract BaseController is Owned {
     address managerAddr;
 
-    function setManager(address _managerAddr) public onlyOwner {
+    function setManagerAddr(address _managerAddr) public onlyOwner {
         managerAddr = _managerAddr;
     }
 }

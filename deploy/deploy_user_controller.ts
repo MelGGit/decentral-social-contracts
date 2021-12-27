@@ -1,6 +1,7 @@
 
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction, Deployment } from 'hardhat-deploy/types';
+import { ethers } from "ethers";
 
 const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<void> => {
   // @ts-ignore
@@ -11,6 +12,8 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
   const contract = await deploy("UserController", {
     from: deployer,
   });
+  // @ts-ignore
+  const userControllerContract = await hre.ethers.getContractAt('UserController', contract.address)
   const userStorageDeployment: Deployment = await deployments.get('UserStorage');
   const contractManagerDeployment: Deployment = await deployments.get('ContractManager');
   // @ts-ignore
@@ -18,6 +21,7 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
   // @ts-ignore
   const contractManagerContract = await hre.ethers.getContractAt("ContractManager", contractManagerDeployment.address)
 
+  await userControllerContract.setManagerAddr(contractManagerDeployment.address)
   await userStorageContract.setControllerAddr(contract.address)
   await contractManagerContract.setAddress('UserController', contract.address)
 

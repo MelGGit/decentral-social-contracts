@@ -14,12 +14,7 @@ contract ContractManager is Owned {
         addresses[_name] = _address;
     }
 
-    function getAddress(string memory _name)
-        public
-        view
-        onlyOwner
-        returns (address)
-    {
+    function getAddress(string memory _name) public view returns (address) {
         return addresses[_name];
     }
 

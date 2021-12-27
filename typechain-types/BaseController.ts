@@ -19,19 +19,25 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 export interface BaseControllerInterface extends utils.Interface {
   functions: {
     "ownerAddr()": FunctionFragment;
-    "setManager(address)": FunctionFragment;
+    "setManagerAddr(address)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
 
   encodeFunctionData(functionFragment: "ownerAddr", values?: undefined): string;
-  encodeFunctionData(functionFragment: "setManager", values: [string]): string;
+  encodeFunctionData(
+    functionFragment: "setManagerAddr",
+    values: [string]
+  ): string;
   encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [string]
   ): string;
 
   decodeFunctionResult(functionFragment: "ownerAddr", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "setManager", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "setManagerAddr",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "transferOwnership",
     data: BytesLike
@@ -69,7 +75,7 @@ export interface BaseController extends BaseContract {
   functions: {
     ownerAddr(overrides?: CallOverrides): Promise<[string]>;
 
-    setManager(
+    setManagerAddr(
       _managerAddr: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -82,7 +88,7 @@ export interface BaseController extends BaseContract {
 
   ownerAddr(overrides?: CallOverrides): Promise<string>;
 
-  setManager(
+  setManagerAddr(
     _managerAddr: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -95,7 +101,10 @@ export interface BaseController extends BaseContract {
   callStatic: {
     ownerAddr(overrides?: CallOverrides): Promise<string>;
 
-    setManager(_managerAddr: string, overrides?: CallOverrides): Promise<void>;
+    setManagerAddr(
+      _managerAddr: string,
+      overrides?: CallOverrides
+    ): Promise<void>;
 
     transferOwnership(
       _newOwner: string,
@@ -108,7 +117,7 @@ export interface BaseController extends BaseContract {
   estimateGas: {
     ownerAddr(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setManager(
+    setManagerAddr(
       _managerAddr: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -122,7 +131,7 @@ export interface BaseController extends BaseContract {
   populateTransaction: {
     ownerAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    setManager(
+    setManagerAddr(
       _managerAddr: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;

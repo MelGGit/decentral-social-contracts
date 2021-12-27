@@ -11,6 +11,8 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
   const contract = await deploy("TweetController", {
     from: deployer,
   });
+  //@ts-ignore
+  const tweetControllerContract = await hre.ethers.getContractAt('TweetController', contract.address)
   const tweetStorageDeployment: Deployment = await deployments.get('TweetStorage');
   const contractManagerDeployment: Deployment = await deployments.get('ContractManager');
   // @ts-ignore
@@ -18,6 +20,7 @@ const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<voi
   // @ts-ignore
   const contractManagerContract = await hre.ethers.getContractAt("ContractManager", contractManagerDeployment.address)
 
+  await tweetControllerContract.setManagerAddr(contractManagerDeployment.address)
   await tweetStorageContract.setControllerAddr(contract.address)
   await contractManagerContract.setAddress('TweetController', contract.address)
 
