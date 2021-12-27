@@ -1,5 +1,5 @@
 import { ethers } from "hardhat";
-import { assert, expect } from "chai";
+import { assert } from "chai";
 import { TweetStorage__factory, TweetStorage } from '../../typechain-types'
 
 describe('TweetStorage Integration Test', () => {

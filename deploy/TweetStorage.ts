@@ -1,7 +1,8 @@
 
 import { HardhatRuntimeEnvironment } from "hardhat/types";
+import { DeployFunction } from 'hardhat-deploy/types';
 
-export default async (hre: HardhatRuntimeEnvironment): Promise<void> => {
+const func: DeployFunction = async (hre: HardhatRuntimeEnvironment): Promise<void> => {
   // @ts-ignore
   const { deployments, getNamedAccounts } = hre
   const { deploy } = deployments;
@@ -13,3 +14,6 @@ export default async (hre: HardhatRuntimeEnvironment): Promise<void> => {
 
   console.log(`TweetStorage deployed to ${contract.address}`);
 };
+
+export default func;
+func.tags = ['TweetStorage']
