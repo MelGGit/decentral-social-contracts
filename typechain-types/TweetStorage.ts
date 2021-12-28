@@ -19,17 +19,24 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface TweetStorageInterface extends utils.Interface {
   functions: {
+    "changeVoteInTweet(uint256,int256)": FunctionFragment;
     "controllerAddr()": FunctionFragment;
     "createTweet(uint256,string)": FunctionFragment;
+    "doesTweetExist(uint256)": FunctionFragment;
     "getNumTweets()": FunctionFragment;
     "getTweetIdsFromUser(uint256)": FunctionFragment;
     "ownerAddr()": FunctionFragment;
     "setControllerAddr(address)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
     "tweetIds(uint256)": FunctionFragment;
+    "tweetToVotes(uint256)": FunctionFragment;
     "tweets(uint256)": FunctionFragment;
   };
 
+  encodeFunctionData(
+    functionFragment: "changeVoteInTweet",
+    values: [BigNumberish, BigNumberish]
+  ): string;
   encodeFunctionData(
     functionFragment: "controllerAddr",
     values?: undefined
@@ -37,6 +44,10 @@ export interface TweetStorageInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "createTweet",
     values: [BigNumberish, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "doesTweetExist",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getNumTweets",
@@ -60,16 +71,28 @@ export interface TweetStorageInterface extends utils.Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
+    functionFragment: "tweetToVotes",
+    values: [BigNumberish]
+  ): string;
+  encodeFunctionData(
     functionFragment: "tweets",
     values: [BigNumberish]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "changeVoteInTweet",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "controllerAddr",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
     functionFragment: "createTweet",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "doesTweetExist",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -90,6 +113,10 @@ export interface TweetStorageInterface extends utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "tweetIds", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "tweetToVotes",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "tweets", data: BytesLike): Result;
 
   events: {};
@@ -122,6 +149,12 @@ export interface TweetStorage extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    changeVoteInTweet(
+      _tweetId: BigNumberish,
+      changeValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     controllerAddr(overrides?: CallOverrides): Promise<[string]>;
 
     createTweet(
@@ -129,6 +162,11 @@ export interface TweetStorage extends BaseContract {
       _text: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    doesTweetExist(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
 
     getNumTweets(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -154,6 +192,11 @@ export interface TweetStorage extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    tweetToVotes(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     tweets(
       arg0: BigNumberish,
       overrides?: CallOverrides
@@ -167,6 +210,12 @@ export interface TweetStorage extends BaseContract {
     >;
   };
 
+  changeVoteInTweet(
+    _tweetId: BigNumberish,
+    changeValue: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
+
   controllerAddr(overrides?: CallOverrides): Promise<string>;
 
   createTweet(
@@ -174,6 +223,11 @@ export interface TweetStorage extends BaseContract {
     _text: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  doesTweetExist(
+    arg0: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
 
   getNumTweets(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -196,6 +250,11 @@ export interface TweetStorage extends BaseContract {
 
   tweetIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
+  tweetToVotes(
+    arg0: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   tweets(
     arg0: BigNumberish,
     overrides?: CallOverrides
@@ -209,6 +268,12 @@ export interface TweetStorage extends BaseContract {
   >;
 
   callStatic: {
+    changeVoteInTweet(
+      _tweetId: BigNumberish,
+      changeValue: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     controllerAddr(overrides?: CallOverrides): Promise<string>;
 
     createTweet(
@@ -216,6 +281,11 @@ export interface TweetStorage extends BaseContract {
       _text: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    doesTweetExist(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
 
     getNumTweets(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -238,6 +308,11 @@ export interface TweetStorage extends BaseContract {
 
     tweetIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
+    tweetToVotes(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     tweets(
       arg0: BigNumberish,
       overrides?: CallOverrides
@@ -254,12 +329,23 @@ export interface TweetStorage extends BaseContract {
   filters: {};
 
   estimateGas: {
+    changeVoteInTweet(
+      _tweetId: BigNumberish,
+      changeValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     controllerAddr(overrides?: CallOverrides): Promise<BigNumber>;
 
     createTweet(
       _userId: BigNumberish,
       _text: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
+    doesTweetExist(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<BigNumber>;
 
     getNumTweets(overrides?: CallOverrides): Promise<BigNumber>;
@@ -283,16 +369,32 @@ export interface TweetStorage extends BaseContract {
 
     tweetIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
+    tweetToVotes(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     tweets(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    changeVoteInTweet(
+      _tweetId: BigNumberish,
+      changeValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     controllerAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     createTweet(
       _userId: BigNumberish,
       _text: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    doesTweetExist(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     getNumTweets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -315,6 +417,11 @@ export interface TweetStorage extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     tweetIds(
+      arg0: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    tweetToVotes(
       arg0: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;

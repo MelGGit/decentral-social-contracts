@@ -1,5 +1,5 @@
 import { ethers } from "hardhat";
-import { assert } from "chai";
+import { assert, expect } from "chai";
 import { TweetStorage__factory, TweetStorage, TweetController, ContractManager__factory, TweetController__factory, UserStorage__factory, UserController__factory } from '../../typechain-types'
 import { assertVMException } from "../utils";
 
@@ -72,6 +72,40 @@ describe('TweetStorage Integration Test', () => {
     const expectedNumber = 1
     const numberOfTweets = await tweetstorage.getNumTweets()
     assert.equal(Number(numberOfTweets), expectedNumber)
+  })
+
+  it('reverts if tweet doesnt exist', async () => {
+    await expect(tweetcontroller.changeVoteInTweet(5, -1)).to.be.reverted
+  })
+
+  it('cant change tweet vote amount without controller', async () => {
+    try {
+      await tweetstorage.changeVoteInTweet(1, 1)
+      assert.fail()
+    } catch (error) {
+      assertVMException(error as Error)
+    }
+  })
+
+  it('reverts if change value is not -1 or 1', async () => {
+    await expect(tweetcontroller.changeVoteInTweet(1, -2)).to.be.reverted
+    await expect(tweetcontroller.changeVoteInTweet(1, 2)).to.be.reverted
+  })
+
+  it('can increase the vote amount of a tweet', async () => {
+    const firstNumber = await tweetstorage.tweetToVotes(1)
+    await tweetcontroller.changeVoteInTweet(1, 1)
+    const secondNumber = await tweetstorage.tweetToVotes(1)
+    const firstNumberAddOne = Number(firstNumber) + 1
+    assert.equal(Number(secondNumber), firstNumberAddOne)
+  })
+
+  it('can reduce the vote amount of a tweet', async () => {
+    const firstNumber = await tweetstorage.tweetToVotes(1)
+    await tweetcontroller.changeVoteInTweet(1, -1)
+    const secondNumber = await tweetstorage.tweetToVotes(1)
+    const firstNumberMinusOne = Number(firstNumber) - 1
+    assert.equal(Number(secondNumber), firstNumberMinusOne)
   })
 
 })

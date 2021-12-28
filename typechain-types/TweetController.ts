@@ -4,6 +4,7 @@
 import {
   BaseContract,
   BigNumber,
+  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -18,12 +19,17 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface TweetControllerInterface extends utils.Interface {
   functions: {
+    "changeVoteInTweet(uint256,int256)": FunctionFragment;
     "createTweet(string)": FunctionFragment;
     "ownerAddr()": FunctionFragment;
     "setManagerAddr(address)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
 
+  encodeFunctionData(
+    functionFragment: "changeVoteInTweet",
+    values: [BigNumberish, BigNumberish]
+  ): string;
   encodeFunctionData(functionFragment: "createTweet", values: [string]): string;
   encodeFunctionData(functionFragment: "ownerAddr", values?: undefined): string;
   encodeFunctionData(
@@ -35,6 +41,10 @@ export interface TweetControllerInterface extends utils.Interface {
     values: [string]
   ): string;
 
+  decodeFunctionResult(
+    functionFragment: "changeVoteInTweet",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(
     functionFragment: "createTweet",
     data: BytesLike
@@ -79,6 +89,12 @@ export interface TweetController extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    changeVoteInTweet(
+      _tweetId: BigNumberish,
+      changeValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
+
     createTweet(
       _text: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -96,6 +112,12 @@ export interface TweetController extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
   };
+
+  changeVoteInTweet(
+    _tweetId: BigNumberish,
+    changeValue: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   createTweet(
     _text: string,
@@ -115,6 +137,12 @@ export interface TweetController extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    changeVoteInTweet(
+      _tweetId: BigNumberish,
+      changeValue: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     createTweet(_text: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     ownerAddr(overrides?: CallOverrides): Promise<string>;
@@ -133,6 +161,12 @@ export interface TweetController extends BaseContract {
   filters: {};
 
   estimateGas: {
+    changeVoteInTweet(
+      _tweetId: BigNumberish,
+      changeValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<BigNumber>;
+
     createTweet(
       _text: string,
       overrides?: Overrides & { from?: string | Promise<string> }
@@ -152,6 +186,12 @@ export interface TweetController extends BaseContract {
   };
 
   populateTransaction: {
+    changeVoteInTweet(
+      _tweetId: BigNumberish,
+      changeValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
     createTweet(
       _text: string,
       overrides?: Overrides & { from?: string | Promise<string> }

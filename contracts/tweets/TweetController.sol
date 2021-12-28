@@ -23,4 +23,18 @@ contract TweetController is BaseController {
 
         return _tweetStorage.createTweet(_userId, _text);
     }
+
+    function changeVoteInTweet(uint256 _tweetId, int256 changeValue) public {
+        require(
+            changeValue == 1 || changeValue == -1,
+            "can only change votes by +1 or -1"
+        );
+        ContractManager _manager = ContractManager(managerAddr);
+        address _tweetStorageAddr = _manager.getAddress("TweetStorage");
+        TweetStorage _tweetStorage = TweetStorage(_tweetStorageAddr);
+
+        require(_tweetStorage.doesTweetExist(_tweetId), "Tweet does not exist");
+
+        _tweetStorage.changeVoteInTweet(_tweetId, changeValue);
+    }
 }

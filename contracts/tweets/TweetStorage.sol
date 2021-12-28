@@ -6,6 +6,8 @@ import "../helpers/BaseStorage.sol";
 
 contract TweetStorage is BaseStorage {
     mapping(uint256 => Tweet) public tweets;
+    mapping(uint256 => bool) public doesTweetExist;
+    mapping(uint256 => int256) public tweetToVotes;
     mapping(uint256 => uint256[]) userTweetIds;
     uint256[] public tweetIds;
 
@@ -33,6 +35,8 @@ contract TweetStorage is BaseStorage {
         );
         userTweetIds[_userId].push(latestTweetId);
         tweetIds.push(latestTweetId);
+        tweetToVotes[latestTweetId] = 0;
+        doesTweetExist[latestTweetId] = true;
 
         return latestTweetId;
     }
@@ -47,5 +51,12 @@ contract TweetStorage is BaseStorage {
 
     function getNumTweets() public view returns (uint256) {
         return tweetIds.length;
+    }
+
+    function changeVoteInTweet(uint256 _tweetId, int256 changeValue)
+        public
+        onlyController
+    {
+        tweetToVotes[_tweetId] = tweetToVotes[_tweetId] + changeValue;
     }
 }
