@@ -7,6 +7,7 @@ import "../helpers/BaseStorage.sol";
 contract TweetStorage is BaseStorage {
     mapping(uint256 => Tweet) public tweets;
     mapping(uint256 => uint256[]) userTweetIds;
+    uint256[] public tweetIds;
 
     struct Tweet {
         uint256 id;
@@ -31,6 +32,7 @@ contract TweetStorage is BaseStorage {
             block.timestamp
         );
         userTweetIds[_userId].push(latestTweetId);
+        tweetIds.push(latestTweetId);
 
         return latestTweetId;
     }
@@ -41,5 +43,9 @@ contract TweetStorage is BaseStorage {
         returns (uint256[] memory)
     {
         return userTweetIds[_userId];
+    }
+
+    function getNumTweets() public view returns (uint256) {
+        return tweetIds.length;
     }
 }

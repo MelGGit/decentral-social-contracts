@@ -62,4 +62,16 @@ describe('TweetStorage Integration Test', () => {
     assert.equal(Number(ids[0]), expectedTweetId)
   })
 
+  it('can get tweet ID based on indey', async () => {
+    const expectedTweetId = 1
+    const tweetId = await tweetstorage.tweetIds(0)
+    assert.equal(Number(tweetId), expectedTweetId)
+  })
+
+  it('can return the number of total tweets', async () => {
+    const expectedNumber = 1
+    const numberOfTweets = await tweetstorage.getNumTweets()
+    assert.equal(Number(numberOfTweets), expectedNumber)
+  })
+
 })
