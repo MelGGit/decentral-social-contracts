@@ -21,6 +21,7 @@ export interface TweetStorageInterface extends utils.Interface {
   functions: {
     "controllerAddr()": FunctionFragment;
     "createTweet(uint256,string)": FunctionFragment;
+    "getTweetIdsFromUser(uint256)": FunctionFragment;
     "ownerAddr()": FunctionFragment;
     "setControllerAddr(address)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
@@ -34,6 +35,10 @@ export interface TweetStorageInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "createTweet",
     values: [BigNumberish, string]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getTweetIdsFromUser",
+    values: [BigNumberish]
   ): string;
   encodeFunctionData(functionFragment: "ownerAddr", values?: undefined): string;
   encodeFunctionData(
@@ -55,6 +60,10 @@ export interface TweetStorageInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "createTweet",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getTweetIdsFromUser",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "ownerAddr", data: BytesLike): Result;
@@ -106,6 +115,11 @@ export interface TweetStorage extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
+    getTweetIdsFromUser(
+      _userId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber[]]>;
+
     ownerAddr(overrides?: CallOverrides): Promise<[string]>;
 
     setControllerAddr(
@@ -139,6 +153,11 @@ export interface TweetStorage extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  getTweetIdsFromUser(
+    _userId: BigNumberish,
+    overrides?: CallOverrides
+  ): Promise<BigNumber[]>;
+
   ownerAddr(overrides?: CallOverrides): Promise<string>;
 
   setControllerAddr(
@@ -171,6 +190,11 @@ export interface TweetStorage extends BaseContract {
       _text: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    getTweetIdsFromUser(
+      _userId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber[]>;
 
     ownerAddr(overrides?: CallOverrides): Promise<string>;
 
@@ -208,6 +232,11 @@ export interface TweetStorage extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
+    getTweetIdsFromUser(
+      _userId: BigNumberish,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     ownerAddr(overrides?: CallOverrides): Promise<BigNumber>;
 
     setControllerAddr(
@@ -230,6 +259,11 @@ export interface TweetStorage extends BaseContract {
       _userId: BigNumberish,
       _text: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    getTweetIdsFromUser(
+      _userId: BigNumberish,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     ownerAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;

@@ -8,7 +8,10 @@ contract BaseStorage is Owned {
     address public controllerAddr;
 
     modifier onlyController() {
-        require(msg.sender == controllerAddr);
+        require(
+            msg.sender == controllerAddr,
+            "Only controller can call function!"
+        );
         _;
     }
 

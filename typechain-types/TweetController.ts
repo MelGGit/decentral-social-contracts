@@ -4,7 +4,6 @@
 import {
   BaseContract,
   BigNumber,
-  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -19,16 +18,13 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface TweetControllerInterface extends utils.Interface {
   functions: {
-    "createTweet(uint256,string)": FunctionFragment;
+    "createTweet(string)": FunctionFragment;
     "ownerAddr()": FunctionFragment;
     "setManagerAddr(address)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
   };
 
-  encodeFunctionData(
-    functionFragment: "createTweet",
-    values: [BigNumberish, string]
-  ): string;
+  encodeFunctionData(functionFragment: "createTweet", values: [string]): string;
   encodeFunctionData(functionFragment: "ownerAddr", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "setManagerAddr",
@@ -84,7 +80,6 @@ export interface TweetController extends BaseContract {
 
   functions: {
     createTweet(
-      _userId: BigNumberish,
       _text: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
@@ -103,7 +98,6 @@ export interface TweetController extends BaseContract {
   };
 
   createTweet(
-    _userId: BigNumberish,
     _text: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
@@ -121,11 +115,7 @@ export interface TweetController extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    createTweet(
-      _userId: BigNumberish,
-      _text: string,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
+    createTweet(_text: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     ownerAddr(overrides?: CallOverrides): Promise<string>;
 
@@ -144,7 +134,6 @@ export interface TweetController extends BaseContract {
 
   estimateGas: {
     createTweet(
-      _userId: BigNumberish,
       _text: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
@@ -164,7 +153,6 @@ export interface TweetController extends BaseContract {
 
   populateTransaction: {
     createTweet(
-      _userId: BigNumberish,
       _text: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;

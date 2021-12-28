@@ -6,7 +6,7 @@ contract Owned {
     address public ownerAddr;
 
     modifier onlyOwner() {
-        require(msg.sender == ownerAddr);
+        require(msg.sender == ownerAddr, "only the Owner can call function!");
         _;
     }
 

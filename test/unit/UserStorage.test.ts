@@ -23,7 +23,7 @@ describe('UserStorage Unit Test', () => {
 
   it('should create tweet with ID 1', async () => {
     const expectedId = 1
-    const firstUserId = await userstorage.connect(controller.address).callStatic.createUser(sender.address, 'Dude', 'Mel', 'Grosser', 'Frontend and Blockchain Developer', 'test@test.com')
+    const firstUserId = await userstorage.connect(controller.address).callStatic.createUser(sender.address, username, firstName, lastName, 'Frontend and Blockchain Developer', 'test@test.com')
     expect(firstUserId).to.be.equal(expectedId)
   })
 
