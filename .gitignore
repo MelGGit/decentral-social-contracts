@@ -17,3 +17,13 @@ typechain/
 # Coverage
 coverage/
 coverage.json
+
+client/.DS_Store
+client/.vite-ssg-dist
+client/.vite-ssg-temp
+client/*.local
+client/dist
+client/dist-ssr
+client/.node_modules
+client/.idea/
+client/*.log
