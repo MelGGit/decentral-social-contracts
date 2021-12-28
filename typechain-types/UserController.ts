@@ -18,7 +18,7 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface UserControllerInterface extends utils.Interface {
   functions: {
-    "createUser(bytes32)": FunctionFragment;
+    "createUser(bytes32,bytes32,bytes32,string,string)": FunctionFragment;
     "ownerAddr()": FunctionFragment;
     "setManagerAddr(address)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
@@ -26,7 +26,7 @@ export interface UserControllerInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: "createUser",
-    values: [BytesLike]
+    values: [BytesLike, BytesLike, BytesLike, string, string]
   ): string;
   encodeFunctionData(functionFragment: "ownerAddr", values?: undefined): string;
   encodeFunctionData(
@@ -81,6 +81,10 @@ export interface UserController extends BaseContract {
   functions: {
     createUser(
       _username: BytesLike,
+      _firstName: BytesLike,
+      _lastName: BytesLike,
+      _bio: string,
+      _eMail: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -99,6 +103,10 @@ export interface UserController extends BaseContract {
 
   createUser(
     _username: BytesLike,
+    _firstName: BytesLike,
+    _lastName: BytesLike,
+    _bio: string,
+    _eMail: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -117,6 +125,10 @@ export interface UserController extends BaseContract {
   callStatic: {
     createUser(
       _username: BytesLike,
+      _firstName: BytesLike,
+      _lastName: BytesLike,
+      _bio: string,
+      _eMail: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -138,6 +150,10 @@ export interface UserController extends BaseContract {
   estimateGas: {
     createUser(
       _username: BytesLike,
+      _firstName: BytesLike,
+      _lastName: BytesLike,
+      _bio: string,
+      _eMail: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -157,6 +173,10 @@ export interface UserController extends BaseContract {
   populateTransaction: {
     createUser(
       _username: BytesLike,
+      _firstName: BytesLike,
+      _lastName: BytesLike,
+      _bio: string,
+      _eMail: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

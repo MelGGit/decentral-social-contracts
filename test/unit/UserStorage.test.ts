@@ -9,7 +9,9 @@ describe('UserStorage Unit Test', () => {
   let controller: SignerWithAddress
   let account2: SignerWithAddress
   let userstorage: UserStorage
-  const username = ethers.utils.formatBytes32String('tristan')
+  const username = ethers.utils.formatBytes32String('Dude')
+  const firstName = ethers.utils.formatBytes32String('Mel')
+  const lastName = ethers.utils.formatBytes32String('Grosser')
 
   beforeEach(async () => {
     [sender, controller, account2] = await ethers.getSigners()
@@ -21,11 +23,11 @@ describe('UserStorage Unit Test', () => {
 
   it('should create tweet with ID 1', async () => {
     const expectedId = 1
-    const firstUserId = await userstorage.connect(controller.address).callStatic.createUser(username)
+    const firstUserId = await userstorage.connect(controller.address).callStatic.createUser(sender.address, 'Dude', 'Mel', 'Grosser', 'Frontend and Blockchain Developer', 'test@test.com')
     expect(firstUserId).to.be.equal(expectedId)
   })
 
   it('should revert', async () => {
-    expect(userstorage.createUser(username)).to.be.reverted
+    expect(userstorage.createUser(sender.address, username, firstName, lastName, 'Frontend and Blockchain Developer', 'test@test.com')).to.be.reverted
   })
 })

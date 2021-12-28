@@ -19,21 +19,24 @@ import { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from "./common";
 
 export interface UserStorageInterface extends utils.Interface {
   functions: {
+    "addresses(address)": FunctionFragment;
     "controllerAddr()": FunctionFragment;
-    "createUser(bytes32)": FunctionFragment;
+    "createUser(address,bytes32,bytes32,bytes32,string,string)": FunctionFragment;
     "ownerAddr()": FunctionFragment;
     "profiles(uint256)": FunctionFragment;
     "setControllerAddr(address)": FunctionFragment;
     "transferOwnership(address)": FunctionFragment;
+    "usernames(bytes32)": FunctionFragment;
   };
 
+  encodeFunctionData(functionFragment: "addresses", values: [string]): string;
   encodeFunctionData(
     functionFragment: "controllerAddr",
     values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "createUser",
-    values: [BytesLike]
+    values: [string, BytesLike, BytesLike, BytesLike, string, string]
   ): string;
   encodeFunctionData(functionFragment: "ownerAddr", values?: undefined): string;
   encodeFunctionData(
@@ -48,7 +51,12 @@ export interface UserStorageInterface extends utils.Interface {
     functionFragment: "transferOwnership",
     values: [string]
   ): string;
+  encodeFunctionData(
+    functionFragment: "usernames",
+    values: [BytesLike]
+  ): string;
 
+  decodeFunctionResult(functionFragment: "addresses", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "controllerAddr",
     data: BytesLike
@@ -64,6 +72,7 @@ export interface UserStorageInterface extends utils.Interface {
     functionFragment: "transferOwnership",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "usernames", data: BytesLike): Result;
 
   events: {};
 }
@@ -95,10 +104,17 @@ export interface UserStorage extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    addresses(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
     controllerAddr(overrides?: CallOverrides): Promise<[string]>;
 
     createUser(
+      _address: string,
       _username: BytesLike,
+      _firstName: BytesLike,
+      _lastName: BytesLike,
+      _bio: string,
+      _eMail: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -107,7 +123,16 @@ export interface UserStorage extends BaseContract {
     profiles(
       arg0: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, string] & { id: BigNumber; username: string }>;
+    ): Promise<
+      [BigNumber, string, string, string, string, string] & {
+        id: BigNumber;
+        username: string;
+        firstName: string;
+        lastName: string;
+        bio: string;
+        eMail: string;
+      }
+    >;
 
     setControllerAddr(
       _controllerAdrr: string,
@@ -118,12 +143,21 @@ export interface UserStorage extends BaseContract {
       _newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    usernames(arg0: BytesLike, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
+
+  addresses(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   controllerAddr(overrides?: CallOverrides): Promise<string>;
 
   createUser(
+    _address: string,
     _username: BytesLike,
+    _firstName: BytesLike,
+    _lastName: BytesLike,
+    _bio: string,
+    _eMail: string,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -132,7 +166,16 @@ export interface UserStorage extends BaseContract {
   profiles(
     arg0: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<[BigNumber, string] & { id: BigNumber; username: string }>;
+  ): Promise<
+    [BigNumber, string, string, string, string, string] & {
+      id: BigNumber;
+      username: string;
+      firstName: string;
+      lastName: string;
+      bio: string;
+      eMail: string;
+    }
+  >;
 
   setControllerAddr(
     _controllerAdrr: string,
@@ -144,11 +187,20 @@ export interface UserStorage extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
+  usernames(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+
   callStatic: {
+    addresses(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
     controllerAddr(overrides?: CallOverrides): Promise<string>;
 
     createUser(
+      _address: string,
       _username: BytesLike,
+      _firstName: BytesLike,
+      _lastName: BytesLike,
+      _bio: string,
+      _eMail: string,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -157,7 +209,16 @@ export interface UserStorage extends BaseContract {
     profiles(
       arg0: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber, string] & { id: BigNumber; username: string }>;
+    ): Promise<
+      [BigNumber, string, string, string, string, string] & {
+        id: BigNumber;
+        username: string;
+        firstName: string;
+        lastName: string;
+        bio: string;
+        eMail: string;
+      }
+    >;
 
     setControllerAddr(
       _controllerAdrr: string,
@@ -168,15 +229,24 @@ export interface UserStorage extends BaseContract {
       _newOwner: string,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    usernames(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {};
 
   estimateGas: {
+    addresses(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
     controllerAddr(overrides?: CallOverrides): Promise<BigNumber>;
 
     createUser(
+      _address: string,
       _username: BytesLike,
+      _firstName: BytesLike,
+      _lastName: BytesLike,
+      _bio: string,
+      _eMail: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -193,13 +263,25 @@ export interface UserStorage extends BaseContract {
       _newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    usernames(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    addresses(
+      arg0: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     controllerAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     createUser(
+      _address: string,
       _username: BytesLike,
+      _firstName: BytesLike,
+      _lastName: BytesLike,
+      _bio: string,
+      _eMail: string,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -218,6 +300,11 @@ export interface UserStorage extends BaseContract {
     transferOwnership(
       _newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<PopulatedTransaction>;
+
+    usernames(
+      arg0: BytesLike,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }
