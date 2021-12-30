@@ -9,9 +9,9 @@
     "outDir": "./dist",
     "strict": true,
     "rootDirs": [
-      "./src",
-      "./scripts",
-      "./test"
+      "./client/src",
+      "./client/scripts",
+      "./client/test"
     ],
     "esModuleInterop": true
   },
@@ -20,9 +20,9 @@
     "node_modules"
   ],
   "include": [
-    "./test",
-    "./src",
-    "./scripts"
+    "./client/test",
+    "./client/src",
+    "./client/scripts"
   ],
   "files": [
     "./hardhat.config.ts"
