@@ -26,6 +26,7 @@ specifiers:
   ethereum-waffle: ^3.3.0
   ethers: ^5.3.0
   hardhat: ^2.6.7
+  hardhat-abi-exporter: ^2.6.1
   hardhat-deploy: ^0.9.19
   hardhat-gas-reporter: ^1.0.0
   hardhat-log-remover: ^2.0.0
@@ -71,6 +72,7 @@ devDependencies:
   ethereum-waffle: 3.4.0_typescript@4.5.4
   ethers: 5.5.2
   hardhat: 2.8.0
+  hardhat-abi-exporter: 2.6.1_hardhat@2.8.0
   hardhat-deploy: 0.9.19_5cd28dc1e1f599ae0e0f228e3fac1fdd
   hardhat-gas-reporter: 1.0.6_hardhat@2.8.0
   hardhat-log-remover: 2.0.2_hardhat@2.8.0
@@ -3484,6 +3486,17 @@ packages:
     dev: false
     optional: true
 
+  /delete-empty/3.0.0:
+    resolution: {integrity: sha512-ZUyiwo76W+DYnKsL3Kim6M/UOavPdBJgDYWOmuQhYaZvJH0AXAHbUNyEDtRbBra8wqqr686+63/0azfEk1ebUQ==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      ansi-colors: 4.1.1
+      minimist: 1.2.5
+      path-starts-with: 2.0.0
+      rimraf: 2.7.1
+    dev: true
+
   /depd/1.1.2:
     resolution: {integrity: sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=}
     engines: {node: '>= 0.6'}
@@ -5380,6 +5393,17 @@ packages:
   /hard-rejection/2.1.0:
     resolution: {integrity: sha512-VIZB+ibDhx7ObhAe7OVtoEbuP4h/MuOTHJ+J8h/eBXotJYl0fBgR72xDFCKgIh22OJZIOVNxBMWuhAr10r8HdA==}
     engines: {node: '>=6'}
+    dev: true
+
+  /hardhat-abi-exporter/2.6.1_hardhat@2.8.0:
+    resolution: {integrity: sha512-XJj5ZaeBOAuzDzxp8kBbnAlKJZaju0cDBXk0cE7Lphftr+XX5e8XzHU7keZhQIi2dn85dxTrqEY8F/kdltI+hw==}
+    engines: {node: '>=14.14.0'}
+    peerDependencies:
+      hardhat: ^2.0.0
+    dependencies:
+      '@ethersproject/abi': 5.5.0
+      delete-empty: 3.0.0
+      hardhat: 2.8.0
     dev: true
 
   /hardhat-deploy/0.9.19_5cd28dc1e1f599ae0e0f228e3fac1fdd:
@@ -7886,6 +7910,11 @@ packages:
 
   /path-parse/1.0.7:
     resolution: {integrity: sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==}
+    dev: true
+
+  /path-starts-with/2.0.0:
+    resolution: {integrity: sha512-3UHTHbJz5+NLkPafFR+2ycJOjoc4WV2e9qCZCnm71zHiWaFrm1XniLVTkZXvaRgxr1xFh9JsTdicpH2yM03nLA==}
+    engines: {node: '>=8'}
     dev: true
 
   /path-to-regexp/0.1.7:

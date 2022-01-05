@@ -10,6 +10,7 @@ import "hardhat-watcher";
 import "solidity-coverage";
 import "@typechain/hardhat";
 import "@tenderly/hardhat-tenderly";
+import 'hardhat-abi-exporter'
 
 import { HardhatUserConfig, task } from "hardhat/config";
 
@@ -32,6 +33,12 @@ task("accounts", "Prints the list of accounts", async (args, { ethers }) => {
 });
 
 const config: HardhatUserConfig = {
+  abiExporter: {
+    path: './abi',
+    runOnCompile: true,
+    clear: true,
+    flat: true,
+  },
   defaultNetwork: "hardhat",
   etherscan: {
     apiKey: process.env.ETHERSCAN_API_KEY,
